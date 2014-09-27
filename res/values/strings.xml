@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">程序员老黄历</string>
+    <string name="title_bar_angle">请选择日期</string>
+    <string name="tab_day">日视图</string>
+    <string name="tab_month">月视图</string>
+    <string name="menu_about">关于</string>
+
+</resources>

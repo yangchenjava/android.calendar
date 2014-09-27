@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="transparent">#00000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <!-- tab -->
+    <color name="tab_normal">#333333</color>
+    <color name="tab_select">#015997</color>
+    <!-- grid -->
+    <color name="grid_bg">#DCDCDC</color>
+    <color name="grid_item_bg">#B2E4FF</color>
+    <!-- monthview_font -->
+    <color name="date_state_0">#CCCCCC</color>
+    <color name="date_state_1">#2495E1</color>
+    <color name="date_state_2">#4E4B4A</color>
+    <color name="date_state_weekend">#F6725E</color>
+    <color name="date_state_festival">#1E994E</color>
+    <!-- dayview_bkg -->
+    <color name="good_bg">#FEEE43</color>
+    <color name="good_content_bg">#FDFFA9</color>
+    <color name="bad_bg">#FE4543</color>
+    <color name="bad_content_bg">#FEDED3</color>
+    <color name="good_bad_content">#B2B2B2</color>
+    <!-- dialog -->
+    <color name="dialog_bg">#E3E9F4</color>
+    <color name="dialog_title">#2495E1</color>
+    <color name="dialog_content">#FF5B6A7C</color>
+    <color name="dialog_btn_pressed">#5030AAD5</color>
+
+</resources>
