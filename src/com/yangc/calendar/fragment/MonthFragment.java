@@ -14,7 +14,7 @@ public class MonthFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_month, container, false);
-		TextView textView = (TextView) view.findViewById(R.id.view_tv_fragmentMonth);
+		TextView textView = (TextView) view.findViewById(R.id.tv_fragmentMonth);
 		textView.setText("MonthFragment");
 		return view;
 	}

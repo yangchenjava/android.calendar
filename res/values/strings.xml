@@ -2,9 +2,114 @@
 <resources>
 
     <string name="app_name">程序员老黄历</string>
+    <string name="app_version">程序员老黄历\nv2.0</string>
+
+    <!-- contentDescription -->
     <string name="title_bar_angle">请选择日期</string>
+    <string name="dividing_line">分割线</string>
+
+    <!-- tab -->
     <string name="tab_day">日视图</string>
     <string name="tab_month">月视图</string>
-    <string name="menu_about">关于</string>
+
+    <!-- head -->
+    <string name="head_sun">日</string>
+    <string name="head_mon">一</string>
+    <string name="head_tue">二</string>
+    <string name="head_wed">三</string>
+    <string name="head_thu">四</string>
+    <string name="head_fri">五</string>
+    <string name="head_sat">六</string>
+
+    <!-- button -->
+    <string name="button_set">设置</string>
+    <string name="button_today">今天</string>
+    <string name="button_ok">确定</string>
+    <string name="button_cancel">取消</string>
+
+    <!-- text -->
+    <string name="text_good">宜</string>
+    <string name="text_bad">不宜</string>
+    <string name="text_about">关于</string>
+    <string name="text_about_content">该程序仅限于学习娱乐之用</string>
+    <string name="text_copyright">© 2013 yangc.com, all rights reserved</string>
+    <string name="text_exit">别按啦&#8230;再按一下就退出程序了&#8230;</string>
+    <string name="text_prompt">暂只支持1902&#8211;1至2099&#8211;12</string>
+
+    <!-- title -->
+    <string name="title_1">重构</string>
+    <string name="title_2">提交辞职申请</string>
+    <string name="title_3">白天上线</string>
+    <string name="title_4">晚上加班</string>
+    <string name="title_5">在妹子面前吹牛</string>
+    <string name="title_6">面试</string>
+    <string name="title_7">撸管</string>
+    <string name="title_8">锻炼身体</string>
+    <string name="title_9">浏览成人网站</string>
+    <string name="title_10">提交代码</string>
+    <string name="title_11">打DOTA</string>
+    <string name="title_12">用记事本写code</string>
+    <string name="title_13">晚上出去约炮</string>
+    <string name="title_14">吃泡面</string>
+    <string name="title_15">申请加薪</string>
+    <string name="title_16">修改BUG</string>
+
+    <!-- good -->
+    <string name="good_content_1">代码质量得到提高</string>
+    <string name="good_content_2">公司找到了一个比你更能干更便宜的家伙 , 巴不得你赶快滚蛋</string>
+    <string name="good_content_3">今天白天上线是安全的</string>
+    <string name="good_content_4">给领导留下好印象</string>
+    <string name="good_content_5">提高在妹子心中的个人魅力</string>
+    <string name="good_content_6">面试官今天心情很好</string>
+    <string name="good_content_7">小撸怡情 , 大撸伤身 , 强撸灰飞烟灭</string>
+    <string name="good_content_8">保证精力充沛</string>
+    <string name="good_content_9">重拾对生活的信心</string>
+    <string name="good_content_10">遇到冲突的机率是最低的</string>
+    <string name="good_content_11">你会感觉有如神助</string>
+    <string name="good_content_12">让同事刮目相看</string>
+    <string name="good_content_13">遇到黑木耳的机率最小</string>
+    <string name="good_content_14">恭喜中奖 , 再来一袋</string>
+    <string name="good_content_15">老板的心情很好</string>
+    <string name="good_content_16">BUG定位很准</string>
+
+    <!-- bad -->
+    <string name="bad_content_1">让你陷入代码的泥潭当中</string>
+    <string name="bad_content_2">鉴于当前的经济形势 , 下一份工作不如这强</string>
+    <string name="bad_content_3">遇到恐龙的机率很高</string>
+    <string name="bad_content_4">工作效率很低</string>
+    <string name="bad_content_5">会被识破</string>
+    <string name="bad_content_6">面试官不爽 , 拿你出气</string>
+    <string name="bad_content_7">天干物燥 , 不宜撸管</string>
+    <string name="bad_content_8">你会发现自己虚了很多</string>
+    <string name="bad_content_9">越发感觉空虚寂寞冷</string>
+    <string name="bad_content_10">代码基本都是冲突的</string>
+    <string name="bad_content_11">被虐的很惨</string>
+    <string name="bad_content_12">同事感觉你在装13</string>
+    <string name="bad_content_13">会遇到突击检查</string>
+    <string name="bad_content_14">你会发现没有调味包</string>
+    <string name="bad_content_15">公司正准备裁员</string>
+    <string name="bad_content_16">越改越乱</string>
+
+    <!-- face -->
+    <string name="face_0">北方</string>
+    <string name="face_1">东北方</string>
+    <string name="face_2">东方</string>
+    <string name="face_3">东南方</string>
+    <string name="face_4">南方</string>
+    <string name="face_5">西南方</string>
+    <string name="face_6">西方</string>
+    <string name="face_7">西北方</string>
+
+    <!-- drink -->
+    <string name="drink_0">可乐</string>
+    <string name="drink_1">白开水</string>
+    <string name="drink_2">茶</string>
+    <string name="drink_3">牛奶</string>
+    <string name="drink_4">王老吉</string>
+    <string name="drink_5">咖啡</string>
+    <string name="drink_6">果汁</string>
+    <string name="drink_7">脉动</string>
+    <string name="drink_8">豆浆</string>
+    <string name="drink_9">红牛</string>
 
 </resources>

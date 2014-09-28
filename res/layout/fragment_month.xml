@@ -6,7 +6,7 @@
     android:gravity="center" >
 
     <TextView
-        android:id="@+id/view_tv_fragmentMonth"
+        android:id="@+id/tv_fragmentMonth"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="25sp" />

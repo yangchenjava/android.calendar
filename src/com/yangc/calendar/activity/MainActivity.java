@@ -32,17 +32,17 @@ public class MainActivity extends FragmentActivity {
 		this.colorTabSelect = this.getResources().getColor(R.color.tab_select);
 
 		this.fragments = new SparseArrayCompat<Fragment>(2);
-		this.fragments.put(R.id.button_rb_tabDay, new DayFragment());
-		this.fragments.put(R.id.button_rb_tabMonth, new MonthFragment());
+		this.fragments.put(R.id.rb_tabDay, new DayFragment());
+		this.fragments.put(R.id.rb_tabMonth, new MonthFragment());
 
-		RadioGroup groupRgTabs = (RadioGroup) this.findViewById(R.id.group_rg_tabs);
-		groupRgTabs.setOnCheckedChangeListener(new CheckedChangeListener());
+		RadioGroup rgTabs = (RadioGroup) this.findViewById(R.id.rg_tabs);
+		rgTabs.setOnCheckedChangeListener(new CheckedChangeListener());
 
 		this.radioButtons = new SparseArrayCompat<RadioButton>(2);
-		this.radioButtons.put(R.id.button_rb_tabDay, (RadioButton) this.findViewById(R.id.button_rb_tabDay));
-		this.radioButtons.put(R.id.button_rb_tabMonth, (RadioButton) this.findViewById(R.id.button_rb_tabMonth));
+		this.radioButtons.put(R.id.rb_tabDay, (RadioButton) this.findViewById(R.id.rb_tabDay));
+		this.radioButtons.put(R.id.rb_tabMonth, (RadioButton) this.findViewById(R.id.rb_tabMonth));
 
-		this.radioButtons.get(R.id.button_rb_tabDay).setChecked(true);
+		this.radioButtons.get(R.id.rb_tabDay).setChecked(true);
 	}
 
 	private class CheckedChangeListener implements RadioGroup.OnCheckedChangeListener {
@@ -53,7 +53,7 @@ public class MainActivity extends FragmentActivity {
 			}
 
 			FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-			fragmentTransaction.replace(R.id.layout_rl_main, fragments.get(checkedId));
+			fragmentTransaction.replace(R.id.rl_main, fragments.get(checkedId));
 			fragmentTransaction.commit();
 		}
 	}
