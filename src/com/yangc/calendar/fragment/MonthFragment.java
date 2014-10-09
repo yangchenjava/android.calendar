@@ -1,11 +1,13 @@
 package com.yangc.calendar.fragment;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -95,16 +97,10 @@ public class MonthFragment extends Fragment {
 		}
 
 		@Override
-		public Object instantiateItem(ViewGroup container, final int position) {
+		public Object instantiateItem(ViewGroup container, int position) {
 			View view = mainActivity.getLayoutInflater().inflate(R.layout.fragment_month_item, container, false);
-			final GridView gvFragmentMonthGrid = (GridView) view.findViewById(R.id.gv_fragmentMonth_grid);
-			new Handler().post(new Runnable() {
-				public void run() {
-					Calendar calendar = Calendar.getInstance();
-					calendar.add(Calendar.MONTH, position - ITEM_COUNT / 2);
-					gvFragmentMonthGrid.setAdapter(new MonthFragmentAdapter(mainActivity, getCalendarBeanList(calendar)));
-				}
-			});
+			GridView gvFragmentMonthGrid = (GridView) view.findViewById(R.id.gv_fragmentMonth_grid);
+			new Thread(new MonthGridViewRunnable(position, new MonthGridViewHandler(gvFragmentMonthGrid))).start();
 
 			container.addView(view);
 			return view;
@@ -113,6 +109,100 @@ public class MonthFragment extends Fragment {
 		@Override
 		public void destroyItem(ViewGroup container, int position, Object object) {
 			container.removeView((View) object);
+		}
+	}
+
+	private static class MonthGridViewHandler extends Handler {
+		private WeakReference<GridView> mGridView;
+
+		private MonthGridViewHandler(GridView gridView) {
+			this.mGridView = new WeakReference<GridView>(gridView);
+		}
+
+		@Override
+		public void handleMessage(Message msg) {
+			GridView gridView = this.mGridView.get();
+			if (gridView != null) {
+				gridView.setAdapter((MonthFragmentAdapter) msg.obj);
+			}
+		}
+	}
+
+	private class MonthGridViewRunnable implements Runnable {
+		private int position;
+		private Handler handler;
+
+		public MonthGridViewRunnable(int position, Handler handler) {
+			this.position = position;
+			this.handler = handler;
+		}
+
+		@Override
+		public void run() {
+			Calendar calendar = Calendar.getInstance();
+			calendar.add(Calendar.MONTH, this.position - ITEM_COUNT / 2);
+			Message msg = this.handler.obtainMessage();
+			msg.obj = new MonthFragmentAdapter(mainActivity, getCalendarBeanList(calendar));
+			this.handler.sendMessage(msg);
+		}
+
+		private List<CalendarBean> getCalendarBeanList(Calendar calendar) {
+			List<CalendarBean> list = new ArrayList<CalendarBean>();
+
+			int currentMonth = calendar.get(Calendar.MONTH);
+
+			calendar.set(Calendar.DATE, 1);
+			calendar.add(Calendar.DATE, calendar.getFirstDayOfWeek() - calendar.get(Calendar.DAY_OF_WEEK));
+
+			ChineseCalendar chineseCalendar = new ChineseCalendar(calendar);
+			ChineseCalendar cc = new ChineseCalendar(true, Integer.parseInt(chineseCalendar.getSimpleChineseDateString().substring(0, 4)), 12, 30);
+			// 先调一下这个, 后面的getTime()才能生效
+			cc.getSimpleGregorianDateString();
+			// 除夕的公历日期
+			CharSequence newYearEve = DateFormat.format("yyyyMMdd", cc.getTime());
+
+			for (int i = 0; i < 42; i++) {
+				CalendarBean bean = new CalendarBean();
+				bean.setDay("" + calendar.get(Calendar.DAY_OF_MONTH));
+				chineseCalendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
+
+				CharSequence ymdStr = DateFormat.format("yyyyMMdd", calendar.getTime());
+				CharSequence mdStr = ymdStr.subSequence(4, ymdStr.length());
+				if (ymdStr.equals(newYearEve)) {
+					bean.setChineseDay("除夕");
+					bean.setFestival(true);
+				} else if (Constants.FESTIVAL.containsKey(mdStr)) {
+					bean.setChineseDay(Constants.FESTIVAL.get(mdStr));
+					bean.setFestival(true);
+				} else {
+					String key = chineseCalendar.getChinese(ChineseCalendar.CHINESE_MONTH) + chineseCalendar.getChinese(ChineseCalendar.CHINESE_DATE);
+					if (Constants.FESTIVAL.containsKey(key)) {
+						bean.setChineseDay(Constants.FESTIVAL.get(key));
+						bean.setFestival(true);
+					}
+				}
+				if (bean.getChineseDay() == null) {
+					String chineseDateName = chineseCalendar.getChinese(ChineseCalendar.CHINESE_TERM_OR_DATE);
+					bean.setChineseDay(chineseDateName);
+					bean.setFestival(ChineseCalendar.isTerm(chineseDateName));
+				}
+
+				// 判断是否为周末
+				bean.setWeekend(calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY || calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY);
+
+				// 判断日期状态
+				if (DateUtils.isToday(calendar.getTimeInMillis())) {
+					bean.setDateState(1);
+				} else if (currentMonth != calendar.get(Calendar.MONTH)) {
+					bean.setDateState(0);
+				} else {
+					bean.setDateState(2);
+				}
+
+				list.add(bean);
+				calendar.add(Calendar.DATE, 1);
+			}
+			return list;
 		}
 	}
 
@@ -135,7 +225,12 @@ public class MonthFragment extends Fragment {
 				setViewPagerCurrentItem(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), 1);
 				Toast.makeText(mainActivity, R.string.text_prompt, Toast.LENGTH_SHORT).show();
 			} else {
-				mainActivity.setTitleBarText(dateSelected);
+				new Handler().post(new Runnable() {
+					@Override
+					public void run() {
+						mainActivity.setTitleBarText(dateSelected);
+					}
+				});
 			}
 		}
 
@@ -143,65 +238,6 @@ public class MonthFragment extends Fragment {
 		@Override
 		public void onPageScrollStateChanged(int state) {
 		}
-	}
-
-	private List<CalendarBean> getCalendarBeanList(Calendar calendar) {
-		List<CalendarBean> list = new ArrayList<CalendarBean>();
-
-		int currentMonth = calendar.get(Calendar.MONTH);
-
-		calendar.set(Calendar.DATE, 1);
-		calendar.add(Calendar.DATE, calendar.getFirstDayOfWeek() - calendar.get(Calendar.DAY_OF_WEEK));
-
-		ChineseCalendar chineseCalendar = new ChineseCalendar(calendar);
-		ChineseCalendar cc = new ChineseCalendar(true, Integer.parseInt(chineseCalendar.getSimpleChineseDateString().substring(0, 4)), 12, 30);
-		// 先调一下这个, 后面的getTime()才能生效
-		cc.getSimpleGregorianDateString();
-		// 除夕的公历日期
-		CharSequence newYearEve = DateFormat.format("yyyyMMdd", cc.getTime());
-
-		for (int i = 0; i < 42; i++) {
-			CalendarBean bean = new CalendarBean();
-			bean.setDay("" + calendar.get(Calendar.DAY_OF_MONTH));
-			chineseCalendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
-
-			CharSequence ymdStr = DateFormat.format("yyyyMMdd", calendar.getTime());
-			CharSequence mdStr = ymdStr.subSequence(4, ymdStr.length());
-			if (ymdStr.equals(newYearEve)) {
-				bean.setChineseDay("除夕");
-				bean.setFestival(true);
-			} else if (Constants.FESTIVAL.containsKey(mdStr)) {
-				bean.setChineseDay(Constants.FESTIVAL.get(mdStr));
-				bean.setFestival(true);
-			} else {
-				String key = chineseCalendar.getChinese(ChineseCalendar.CHINESE_MONTH) + chineseCalendar.getChinese(ChineseCalendar.CHINESE_DATE);
-				if (Constants.FESTIVAL.containsKey(key)) {
-					bean.setChineseDay(Constants.FESTIVAL.get(key));
-					bean.setFestival(true);
-				}
-			}
-			if (bean.getChineseDay() == null) {
-				String chineseDateName = chineseCalendar.getChinese(ChineseCalendar.CHINESE_TERM_OR_DATE);
-				bean.setChineseDay(chineseDateName);
-				bean.setFestival(ChineseCalendar.isTerm(chineseDateName));
-			}
-
-			// 判断是否为周末
-			bean.setWeekend(calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY || calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY);
-
-			// 判断日期状态
-			if (DateUtils.isToday(calendar.getTimeInMillis())) {
-				bean.setDateState(1);
-			} else if (currentMonth != calendar.get(Calendar.MONTH)) {
-				bean.setDateState(0);
-			} else {
-				bean.setDateState(2);
-			}
-
-			list.add(bean);
-			calendar.add(Calendar.DATE, 1);
-		}
-		return list;
 	}
 
 	public void showYMDialog() {
