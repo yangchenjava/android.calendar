@@ -85,6 +85,11 @@ public class DayFragment extends Fragment {
 		}
 
 		@Override
+		public int getItemPosition(Object object) {
+			return POSITION_NONE;
+		}
+
+		@Override
 		public Object instantiateItem(ViewGroup container, int position) {
 			Calendar calendar = Calendar.getInstance();
 			calendar.add(Calendar.DATE, position - ITEM_COUNT / 2);

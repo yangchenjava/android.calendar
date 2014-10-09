@@ -11,9 +11,11 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +42,20 @@ public class MainActivity extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.activity_main);
+
+		final RelativeLayout rlMain = (RelativeLayout) this.findViewById(R.id.rl_main);
+		// 获取控件的高度
+		ViewTreeObserver vto = rlMain.getViewTreeObserver();
+		vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+			@SuppressWarnings("deprecation")
+			@Override
+			public void onGlobalLayout() {
+				if (Constants.GV_HEIGHT == 0) {
+					rlMain.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+					Constants.GV_HEIGHT = rlMain.getHeight() / 13 * 12;
+				}
+			}
+		});
 
 		this.aboutDialog = new AboutDialog(this, R.style.prompt_dialog);
 
@@ -111,14 +127,14 @@ public class MainActivity extends FragmentActivity {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-			if (!Constants.isExit) {
-				Constants.isExit = true;
+			if (Constants.IS_EXIT) {
+				this.finish();
+				System.exit(0);
+			} else {
+				Constants.IS_EXIT = true;
 				Toast.makeText(this, R.string.text_exit, Toast.LENGTH_SHORT).show();
 				// 如果3秒内不按第二次的话, 退出状态恢复
 				exitHandler.sendEmptyMessageDelayed(0, 3000);
-			} else {
-				this.finish();
-				System.exit(0);
 			}
 			return true;
 		}
@@ -128,8 +144,7 @@ public class MainActivity extends FragmentActivity {
 	private static Handler exitHandler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
-			super.handleMessage(msg);
-			Constants.isExit = false;
+			Constants.IS_EXIT = false;
 		}
 	};
 

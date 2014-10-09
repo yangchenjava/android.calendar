@@ -15,7 +15,9 @@ public class Constants {
 	public static final String BEGIN_MONTH = "1901-12";
 	public static final String END_MONTH = "2100-01";
 
-	public static boolean isExit = false;
+	public static int GV_HEIGHT = 0;
+
+	public static boolean IS_EXIT = false;
 
 	public static final Map<String, String> FESTIVAL = new HashMap<String, String>();
 

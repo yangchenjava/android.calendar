@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -89,13 +90,21 @@ public class MonthFragment extends Fragment {
 		}
 
 		@Override
-		public Object instantiateItem(ViewGroup container, int position) {
-			Calendar calendar = Calendar.getInstance();
-			calendar.add(Calendar.MONTH, position - ITEM_COUNT / 2);
+		public int getItemPosition(Object object) {
+			return POSITION_NONE;
+		}
 
+		@Override
+		public Object instantiateItem(ViewGroup container, final int position) {
 			View view = mainActivity.getLayoutInflater().inflate(R.layout.fragment_month_item, container, false);
-			GridView gvFragmentMonthGrid = (GridView) view.findViewById(R.id.gv_fragmentMonth_grid);
-			gvFragmentMonthGrid.setAdapter(new MonthFragmentAdapter(mainActivity, getCalendarBeanList(calendar)));
+			final GridView gvFragmentMonthGrid = (GridView) view.findViewById(R.id.gv_fragmentMonth_grid);
+			new Handler().post(new Runnable() {
+				public void run() {
+					Calendar calendar = Calendar.getInstance();
+					calendar.add(Calendar.MONTH, position - ITEM_COUNT / 2);
+					gvFragmentMonthGrid.setAdapter(new MonthFragmentAdapter(mainActivity, getCalendarBeanList(calendar)));
+				}
+			});
 
 			container.addView(view);
 			return view;

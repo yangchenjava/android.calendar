@@ -5,11 +5,13 @@ import java.util.List;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.yangc.calendar.R;
 import com.yangc.calendar.bean.CalendarBean;
+import com.yangc.calendar.utils.Constants;
 
 public class MonthFragmentAdapter extends BaseAdapter {
 
@@ -42,6 +44,7 @@ public class MonthFragmentAdapter extends BaseAdapter {
 		ViewHolder viewHolder;
 		if (convertView == null) {
 			view = View.inflate(context, R.layout.fragment_month_item_item, null);
+			view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, Constants.GV_HEIGHT / 6));
 			viewHolder = new ViewHolder();
 			viewHolder.tvFragmentMonthItemDay = (TextView) view.findViewById(R.id.tv_fragmentMonthItem_day);
 			viewHolder.tvFragmentMonthItemChineseDay = (TextView) view.findViewById(R.id.tv_fragmentMonthItem_chineseDay);
