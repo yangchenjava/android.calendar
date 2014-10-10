@@ -3,6 +3,7 @@ package com.yangc.calendar.fragment;
 import java.util.Calendar;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -23,7 +24,7 @@ import com.yangc.calendar.utils.DivineUtils;
 
 public class DayFragment extends Fragment {
 
-	private static final int ITEM_COUNT = 4380000;
+	public static final int ITEM_COUNT = 4380000;
 
 	private MainActivity mainActivity;
 	private ViewPager vpFragmentDay;
@@ -142,7 +143,12 @@ public class DayFragment extends Fragment {
 				setViewPagerCurrentItem(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE));
 				Toast.makeText(mainActivity, R.string.text_prompt, Toast.LENGTH_SHORT).show();
 			} else {
-				mainActivity.setTitleBarText(dateSelected.substring(0, 7));
+				new Handler().post(new Runnable() {
+					@Override
+					public void run() {
+						mainActivity.setTitleBarText(dateSelected.substring(0, 7));
+					}
+				});
 			}
 		}
 

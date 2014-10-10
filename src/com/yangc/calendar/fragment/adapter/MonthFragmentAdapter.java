@@ -48,6 +48,8 @@ public class MonthFragmentAdapter extends BaseAdapter {
 			viewHolder = new ViewHolder();
 			viewHolder.tvFragmentMonthItemDay = (TextView) view.findViewById(R.id.tv_fragmentMonthItem_day);
 			viewHolder.tvFragmentMonthItemChineseDay = (TextView) view.findViewById(R.id.tv_fragmentMonthItem_chineseDay);
+			viewHolder.tvFragmentMonthItemDay.getLayoutParams().width = Constants.SCREEN_WIDTH / 7;
+			viewHolder.tvFragmentMonthItemChineseDay.getLayoutParams().width = Constants.SCREEN_WIDTH / 7;
 			view.setTag(viewHolder);
 		} else {
 			view = convertView;

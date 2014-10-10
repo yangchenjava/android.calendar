@@ -39,15 +39,16 @@ public class MainActivity extends FragmentActivity {
 	private int colorTabSelect;
 
 	@Override
+	@SuppressWarnings("deprecation")
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.activity_main);
 
+		Constants.SCREEN_WIDTH = this.getWindowManager().getDefaultDisplay().getWidth();
 		final RelativeLayout rlMain = (RelativeLayout) this.findViewById(R.id.rl_main);
 		// 获取控件的高度
 		ViewTreeObserver vto = rlMain.getViewTreeObserver();
 		vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-			@SuppressWarnings("deprecation")
 			@Override
 			public void onGlobalLayout() {
 				if (Constants.GV_HEIGHT == 0) {

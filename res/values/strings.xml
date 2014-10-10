@@ -36,6 +36,7 @@
     <string name="text_copyright">© 2013 yangc.com, all rights reserved</string>
     <string name="text_exit">别按啦&#8230;再按一下就退出程序了&#8230;</string>
     <string name="text_prompt">暂只支持1902&#8211;1至2099&#8211;12</string>
+    <string name="text_load">加载中，请稍后&#8230;</string>
 
     <!-- title -->
     <string name="title_1">重构</string>
@@ -57,30 +58,30 @@
 
     <!-- good -->
     <string name="good_content_1">代码质量得到提高</string>
-    <string name="good_content_2">公司找到了一个比你更能干更便宜的家伙 , 巴不得你赶快滚蛋</string>
+    <string name="good_content_2">公司找到了一个比你更能干更便宜的家伙，巴不得你赶快滚蛋</string>
     <string name="good_content_3">今天白天上线是安全的</string>
     <string name="good_content_4">给领导留下好印象</string>
     <string name="good_content_5">提高在妹子心中的个人魅力</string>
     <string name="good_content_6">面试官今天心情很好</string>
-    <string name="good_content_7">小撸怡情 , 大撸伤身 , 强撸灰飞烟灭</string>
+    <string name="good_content_7">小撸怡情，大撸伤身，强撸灰飞烟灭</string>
     <string name="good_content_8">保证精力充沛</string>
     <string name="good_content_9">重拾对生活的信心</string>
     <string name="good_content_10">遇到冲突的机率是最低的</string>
     <string name="good_content_11">你会感觉有如神助</string>
     <string name="good_content_12">让同事刮目相看</string>
     <string name="good_content_13">遇到黑木耳的机率最小</string>
-    <string name="good_content_14">恭喜中奖 , 再来一袋</string>
+    <string name="good_content_14">恭喜中奖，再来一袋</string>
     <string name="good_content_15">老板的心情很好</string>
     <string name="good_content_16">BUG定位很准</string>
 
     <!-- bad -->
     <string name="bad_content_1">让你陷入代码的泥潭当中</string>
-    <string name="bad_content_2">鉴于当前的经济形势 , 下一份工作不如这强</string>
+    <string name="bad_content_2">鉴于当前的经济形势，下一份工作不如这强</string>
     <string name="bad_content_3">遇到恐龙的机率很高</string>
     <string name="bad_content_4">工作效率很低</string>
     <string name="bad_content_5">会被识破</string>
-    <string name="bad_content_6">面试官不爽 , 拿你出气</string>
-    <string name="bad_content_7">天干物燥 , 不宜撸管</string>
+    <string name="bad_content_6">面试官不爽，拿你出气</string>
+    <string name="bad_content_7">天干物燥，不宜撸管</string>
     <string name="bad_content_8">你会发现自己虚了很多</string>
     <string name="bad_content_9">越发感觉空虚寂寞冷</string>
     <string name="bad_content_10">代码基本都是冲突的</string>
