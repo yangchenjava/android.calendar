@@ -4,10 +4,12 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
 import com.yangc.calendar.R;
+import com.yangc.calendar.utils.Constants;
 
 public class AboutDialog extends Dialog {
 
@@ -25,8 +27,8 @@ public class AboutDialog extends Dialog {
 		this.setContentView(R.layout.dialog_about);
 
 		WindowManager.LayoutParams params = this.getWindow().getAttributes();
-		params.width = 450;
-		params.height = 334;
+		params.width = (int) (Constants.SCREEN_WIDTH * 0.8);
+		params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
 		this.getWindow().setAttributes(params);
 
 		((RelativeLayout) this.findViewById(R.id.rl_dialogAbout_cancel)).setOnClickListener(new View.OnClickListener() {

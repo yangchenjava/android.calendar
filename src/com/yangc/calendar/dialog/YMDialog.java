@@ -7,6 +7,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.TextView;
 
@@ -47,8 +48,8 @@ public class YMDialog extends Dialog {
 		setContentView(R.layout.dialog_ym);
 
 		WindowManager.LayoutParams params = this.getWindow().getAttributes();
-		params.width = 450;
-		params.height = 420;
+		params.width = (int) (Constants.SCREEN_WIDTH * 0.9);
+		params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
 		this.getWindow().setAttributes(params);
 
 		title = (TextView) this.findViewById(R.id.tv_dialogYm_title);
