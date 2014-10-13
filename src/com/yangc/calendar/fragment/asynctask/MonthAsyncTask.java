@@ -1,8 +1,12 @@
 package com.yangc.calendar.fragment.asynctask;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
+
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeConstants;
+import org.joda.time.Days;
+import org.joda.time.LocalDate;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -17,7 +21,6 @@ import com.yangc.calendar.fragment.MonthFragment;
 import com.yangc.calendar.fragment.adapter.MonthFragmentAdapter;
 import com.yangc.calendar.utils.ChineseCalendar;
 import com.yangc.calendar.utils.Constants;
-import com.yangc.calendar.utils.DateUtils;
 
 public class MonthAsyncTask extends AsyncTask<Integer, Integer, BaseAdapter> {
 
@@ -39,9 +42,7 @@ public class MonthAsyncTask extends AsyncTask<Integer, Integer, BaseAdapter> {
 
 	@Override
 	protected BaseAdapter doInBackground(Integer... params) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.add(Calendar.MONTH, params[0] - MonthFragment.ITEM_COUNT / 2);
-		return new MonthFragmentAdapter(this.context, this.getCalendarBeanList(calendar));
+		return new MonthFragmentAdapter(this.context, this.getCalendarBeanList(DateTime.now().plusMonths(params[0] - MonthFragment.ITEM_COUNT / 2)));
 	}
 
 	@Override
@@ -52,27 +53,29 @@ public class MonthAsyncTask extends AsyncTask<Integer, Integer, BaseAdapter> {
 		this.mGridView.setAdapter(result);
 	}
 
-	private List<CalendarBean> getCalendarBeanList(Calendar calendar) {
+	private List<CalendarBean> getCalendarBeanList(DateTime dt) {
 		List<CalendarBean> list = new ArrayList<CalendarBean>();
 
-		int currentMonth = calendar.get(Calendar.MONTH);
+		int currentMonth = dt.getMonthOfYear();
 
-		calendar.set(Calendar.DATE, 1);
-		calendar.add(Calendar.DATE, calendar.getFirstDayOfWeek() - calendar.get(Calendar.DAY_OF_WEEK));
+		dt = dt.withDayOfMonth(1);
+		if (dt.getDayOfWeek() != DateTimeConstants.SUNDAY) {
+			dt = dt.minusDays(dt.getDayOfWeek());
+		}
 
-		ChineseCalendar chineseCalendar = new ChineseCalendar(calendar);
+		ChineseCalendar chineseCalendar = new ChineseCalendar(dt.toCalendar(null));
 		ChineseCalendar cc = new ChineseCalendar(true, Integer.parseInt(chineseCalendar.getSimpleChineseDateString().substring(0, 4)), 12, 30);
 		// 先调一下这个, 后面的getTime()才能生效
 		cc.getSimpleGregorianDateString();
 		// 除夕的公历日期
-		CharSequence newYearEve = DateFormat.format("yyyyMMdd", cc.getTime());
+		CharSequence newYearEve = DateFormat.format("yyyyMMdd", cc.getTime()).toString();
 
 		for (int i = 0; i < 42; i++) {
 			CalendarBean bean = new CalendarBean();
-			bean.setDay("" + calendar.get(Calendar.DAY_OF_MONTH));
-			chineseCalendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
+			bean.setDay("" + dt.getDayOfMonth());
+			chineseCalendar.set(dt.getYear(), dt.getMonthOfYear() - 1, dt.getDayOfMonth(), 0, 0, 0);
 
-			String ymdStr = DateFormat.format("yyyyMMdd", calendar.getTime()).toString();
+			String ymdStr = DateFormat.format("yyyyMMdd", dt.getMillis()).toString();
 			String mdStr = ymdStr.substring(4);
 			if (ymdStr.equals(newYearEve)) {
 				bean.setChineseDay("除夕");
@@ -94,19 +97,19 @@ public class MonthAsyncTask extends AsyncTask<Integer, Integer, BaseAdapter> {
 			}
 
 			// 判断是否为周末
-			bean.setWeekend(calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY || calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY);
+			bean.setWeekend(dt.getDayOfWeek() == DateTimeConstants.SATURDAY || dt.getDayOfWeek() == DateTimeConstants.SUNDAY);
 
 			// 判断日期状态
-			if (DateUtils.isToday(calendar.getTimeInMillis())) {
+			if (Days.daysBetween(LocalDate.now(), dt.toLocalDate()).getDays() == 0) {
 				bean.setDateState(1);
-			} else if (currentMonth != calendar.get(Calendar.MONTH)) {
+			} else if (currentMonth != dt.getMonthOfYear()) {
 				bean.setDateState(0);
 			} else {
 				bean.setDateState(2);
 			}
 
 			list.add(bean);
-			calendar.add(Calendar.DATE, 1);
+			dt = dt.plusDays(1);
 		}
 		return list;
 	}

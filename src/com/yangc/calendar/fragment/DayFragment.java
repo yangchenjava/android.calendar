@@ -1,6 +1,8 @@
 package com.yangc.calendar.fragment;
 
-import java.util.Calendar;
+import org.joda.time.DateTime;
+import org.joda.time.Days;
+import org.joda.time.LocalDate;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,7 +21,6 @@ import com.yangc.calendar.activity.MainActivity;
 import com.yangc.calendar.dialog.YMDDialog;
 import com.yangc.calendar.utils.ChineseCalendar;
 import com.yangc.calendar.utils.Constants;
-import com.yangc.calendar.utils.DateUtils;
 import com.yangc.calendar.utils.DivineUtils;
 
 public class DayFragment extends Fragment {
@@ -46,7 +47,7 @@ public class DayFragment extends Fragment {
 		this.ymdDialog = new YMDDialog(this.mainActivity, R.style.prompt_dialog, new YMDDialog.OnDateSetListener() {
 			@Override
 			public void onDateSet(int year, int monthOfYear, int dayOfMonth) {
-				setViewPagerCurrentItem(year, monthOfYear, dayOfMonth);
+				setViewPagerCurrentItem(year, monthOfYear + 1, dayOfMonth);
 			}
 		}, new YMDDialog.OnClickListener() {
 			@Override
@@ -69,9 +70,7 @@ public class DayFragment extends Fragment {
 	}
 
 	private void setViewPagerCurrentItem(int year, int month, int day) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.set(year, month, day);
-		this.vpFragmentDay.setCurrentItem(ITEM_COUNT / 2 + DateUtils.getOffsetDays(Calendar.getInstance(), calendar));
+		this.vpFragmentDay.setCurrentItem(ITEM_COUNT / 2 + Days.daysBetween(LocalDate.now(), new DateTime(year, month, day, 0, 0).toLocalDate()).getDays());
 	}
 
 	private class DayFragmentPagerAdapter extends PagerAdapter {
@@ -92,11 +91,10 @@ public class DayFragment extends Fragment {
 
 		@Override
 		public Object instantiateItem(ViewGroup container, int position) {
-			Calendar calendar = Calendar.getInstance();
-			calendar.add(Calendar.DATE, position - ITEM_COUNT / 2);
-			ChineseCalendar chineseCalendar = new ChineseCalendar(calendar);
+			DateTime dt = DateTime.now().plusDays(position - ITEM_COUNT / 2);
+			ChineseCalendar chineseCalendar = new ChineseCalendar(dt.toCalendar(null));
 
-			int day = calendar.get(Calendar.DATE);
+			int day = dt.getDayOfMonth();
 
 			View view = mainActivity.getLayoutInflater().inflate(R.layout.fragment_day_item, container, false);
 			((TextView) view.findViewById(R.id.tv_fragmentDay_day)).setText("" + day);
@@ -112,7 +110,7 @@ public class DayFragment extends Fragment {
 					(TextView) view.findViewById(R.id.tv_fragmentDay_badContent_2), day);
 			DivineUtils.setFace(mainActivity, (TextView) view.findViewById(R.id.tv_fragmentDay_face), day);
 			DivineUtils.setDrink(mainActivity, (TextView) view.findViewById(R.id.tv_fragmentDay_drink), day);
-			DivineUtils.setGirl((TextView) view.findViewById(R.id.tv_fragmentDay_girl), calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, day);
+			DivineUtils.setGirl((TextView) view.findViewById(R.id.tv_fragmentDay_girl), dt.getYear(), dt.getMonthOfYear(), day);
 
 			container.addView(view);
 			return view;
@@ -131,16 +129,15 @@ public class DayFragment extends Fragment {
 
 		@Override
 		public void onPageSelected(int position) {
-			Calendar calendar = Calendar.getInstance();
-			calendar.add(Calendar.DATE, position - ITEM_COUNT / 2);
-			dateSelected = DateFormat.format("yyyy-MM-dd", calendar).toString();
+			DateTime dt = DateTime.now().plusDays(position - ITEM_COUNT / 2);
+			dateSelected = DateFormat.format("yyyy-MM-dd", dt.getMillis()).toString();
 			if (dateSelected.equals(Constants.BEGIN_DATE)) {
-				calendar.add(Calendar.DATE, 1);
-				setViewPagerCurrentItem(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE));
+				dt = dt.plusDays(1);
+				setViewPagerCurrentItem(dt.getYear(), dt.getMonthOfYear(), dt.getDayOfMonth());
 				Toast.makeText(mainActivity, R.string.text_prompt, Toast.LENGTH_SHORT).show();
 			} else if (dateSelected.equals(Constants.END_MONTH)) {
-				calendar.add(Calendar.DATE, -1);
-				setViewPagerCurrentItem(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE));
+				dt = dt.plusDays(-1);
+				setViewPagerCurrentItem(dt.getYear(), dt.getMonthOfYear(), dt.getDayOfMonth());
 				Toast.makeText(mainActivity, R.string.text_prompt, Toast.LENGTH_SHORT).show();
 			} else {
 				new Handler().post(new Runnable() {
