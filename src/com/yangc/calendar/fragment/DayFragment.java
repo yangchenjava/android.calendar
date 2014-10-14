@@ -1,6 +1,5 @@
 package com.yangc.calendar.fragment;
 
-import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 
@@ -9,7 +8,6 @@ import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,12 +63,12 @@ public class DayFragment extends Fragment {
 	}
 
 	private void setToday() {
-		this.mainActivity.setTitleBarText(DateFormat.format("yyyy-MM", System.currentTimeMillis()).toString());
+		this.mainActivity.setTitleBarText(LocalDate.now().toString("yyyy-MM"));
 		this.vpFragmentDay.setCurrentItem(ITEM_COUNT / 2);
 	}
 
 	private void setViewPagerCurrentItem(int year, int month, int day) {
-		this.vpFragmentDay.setCurrentItem(ITEM_COUNT / 2 + Days.daysBetween(LocalDate.now(), new DateTime(year, month, day, 0, 0).toLocalDate()).getDays());
+		this.vpFragmentDay.setCurrentItem(ITEM_COUNT / 2 + Days.daysBetween(LocalDate.now(), new LocalDate(year, month, day)).getDays());
 	}
 
 	private class DayFragmentPagerAdapter extends PagerAdapter {
@@ -91,10 +89,10 @@ public class DayFragment extends Fragment {
 
 		@Override
 		public Object instantiateItem(ViewGroup container, int position) {
-			DateTime dt = DateTime.now().plusDays(position - ITEM_COUNT / 2);
-			ChineseCalendar chineseCalendar = new ChineseCalendar(dt.toCalendar(null));
+			LocalDate ld = LocalDate.now().plusDays(position - ITEM_COUNT / 2);
+			ChineseCalendar chineseCalendar = new ChineseCalendar(ld.toDateTimeAtStartOfDay().toCalendar(null));
 
-			int day = dt.getDayOfMonth();
+			int day = ld.getDayOfMonth();
 
 			View view = mainActivity.getLayoutInflater().inflate(R.layout.fragment_day_item, container, false);
 			((TextView) view.findViewById(R.id.tv_fragmentDay_day)).setText("" + day);
@@ -110,7 +108,7 @@ public class DayFragment extends Fragment {
 					(TextView) view.findViewById(R.id.tv_fragmentDay_badContent_2), day);
 			DivineUtils.setFace(mainActivity, (TextView) view.findViewById(R.id.tv_fragmentDay_face), day);
 			DivineUtils.setDrink(mainActivity, (TextView) view.findViewById(R.id.tv_fragmentDay_drink), day);
-			DivineUtils.setGirl((TextView) view.findViewById(R.id.tv_fragmentDay_girl), dt.getYear(), dt.getMonthOfYear(), day);
+			DivineUtils.setGirl((TextView) view.findViewById(R.id.tv_fragmentDay_girl), ld.getYear(), ld.getMonthOfYear(), day);
 
 			container.addView(view);
 			return view;
@@ -129,15 +127,15 @@ public class DayFragment extends Fragment {
 
 		@Override
 		public void onPageSelected(int position) {
-			DateTime dt = DateTime.now().plusDays(position - ITEM_COUNT / 2);
-			dateSelected = DateFormat.format("yyyy-MM-dd", dt.getMillis()).toString();
+			LocalDate ld = LocalDate.now().plusDays(position - ITEM_COUNT / 2);
+			dateSelected = ld.toString("yyyy-MM-dd");
 			if (dateSelected.equals(Constants.BEGIN_DATE)) {
-				dt = dt.plusDays(1);
-				setViewPagerCurrentItem(dt.getYear(), dt.getMonthOfYear(), dt.getDayOfMonth());
+				ld = ld.plusDays(1);
+				setViewPagerCurrentItem(ld.getYear(), ld.getMonthOfYear(), ld.getDayOfMonth());
 				Toast.makeText(mainActivity, R.string.text_prompt, Toast.LENGTH_SHORT).show();
 			} else if (dateSelected.equals(Constants.END_MONTH)) {
-				dt = dt.plusDays(-1);
-				setViewPagerCurrentItem(dt.getYear(), dt.getMonthOfYear(), dt.getDayOfMonth());
+				ld = ld.plusDays(-1);
+				setViewPagerCurrentItem(ld.getYear(), ld.getMonthOfYear(), ld.getDayOfMonth());
 				Toast.makeText(mainActivity, R.string.text_prompt, Toast.LENGTH_SHORT).show();
 			} else {
 				new Handler().post(new Runnable() {

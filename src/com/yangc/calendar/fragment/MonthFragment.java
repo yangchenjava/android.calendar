@@ -2,7 +2,6 @@ package com.yangc.calendar.fragment;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.Months;
 
@@ -11,7 +10,6 @@ import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,12 +69,12 @@ public class MonthFragment extends Fragment {
 	}
 
 	private void setToday() {
-		this.mainActivity.setTitleBarText(DateFormat.format("yyyy-MM", System.currentTimeMillis()).toString());
+		this.mainActivity.setTitleBarText(LocalDate.now().toString("yyyy-MM"));
 		this.vpFragmentMonth.setCurrentItem(ITEM_COUNT / 2);
 	}
 
 	private void setViewPagerCurrentItem(int year, int month, int day) {
-		this.vpFragmentMonth.setCurrentItem(ITEM_COUNT / 2 + Months.monthsBetween(LocalDate.now().withDayOfMonth(1), new DateTime(year, month, day, 0, 0).toLocalDate()).getMonths());
+		this.vpFragmentMonth.setCurrentItem(ITEM_COUNT / 2 + Months.monthsBetween(LocalDate.now().withDayOfMonth(1), new LocalDate(year, month, day)).getMonths());
 	}
 
 	private class MonthFragmentPagerAdapter extends PagerAdapter {
@@ -116,15 +114,15 @@ public class MonthFragment extends Fragment {
 
 		@Override
 		public void onPageSelected(int position) {
-			DateTime dt = DateTime.now().plusMonths(position - ITEM_COUNT / 2);
-			dateSelected = DateFormat.format("yyyy-MM", dt.getMillis()).toString();
+			LocalDate ld = LocalDate.now().plusMonths(position - ITEM_COUNT / 2);
+			dateSelected = ld.toString("yyyy-MM");
 			if (dateSelected.equals(Constants.BEGIN_MONTH)) {
-				dt = dt.plusMonths(1);
-				setViewPagerCurrentItem(dt.getYear(), dt.getMonthOfYear(), 1);
+				ld = ld.plusMonths(1);
+				setViewPagerCurrentItem(ld.getYear(), ld.getMonthOfYear(), 1);
 				Toast.makeText(mainActivity, R.string.text_prompt, Toast.LENGTH_SHORT).show();
 			} else if (dateSelected.equals(Constants.END_MONTH)) {
-				dt = dt.plusMonths(-1);
-				setViewPagerCurrentItem(dt.getYear(), dt.getMonthOfYear(), 1);
+				ld = ld.plusMonths(-1);
+				setViewPagerCurrentItem(ld.getYear(), ld.getMonthOfYear(), 1);
 				Toast.makeText(mainActivity, R.string.text_prompt, Toast.LENGTH_SHORT).show();
 			} else {
 				new Handler().post(new Runnable() {
