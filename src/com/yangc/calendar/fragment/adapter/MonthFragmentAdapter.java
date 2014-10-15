@@ -62,8 +62,8 @@ public class MonthFragmentAdapter extends BaseAdapter {
 		if (bean.getDateState() == 0) {
 			viewHolder.tvFragmentMonthItemDay.setTextColor(context.getResources().getColor(R.color.date_state_0));
 			viewHolder.tvFragmentMonthItemChineseDay.setTextColor(context.getResources().getColor(R.color.date_state_0));
-			viewHolder.tvFragmentMonthItemDay.setBackgroundResource(R.color.white);
-			viewHolder.tvFragmentMonthItemChineseDay.setBackgroundResource(R.color.white);
+			viewHolder.tvFragmentMonthItemDay.setBackgroundResource(android.R.color.white);
+			viewHolder.tvFragmentMonthItemChineseDay.setBackgroundResource(android.R.color.white);
 		} else if (bean.getDateState() == 1) {
 			viewHolder.tvFragmentMonthItemDay.setTextColor(context.getResources().getColor(R.color.date_state_1));
 			viewHolder.tvFragmentMonthItemChineseDay.setTextColor(context.getResources().getColor(R.color.date_state_1));
@@ -80,8 +80,8 @@ public class MonthFragmentAdapter extends BaseAdapter {
 			} else {
 				viewHolder.tvFragmentMonthItemChineseDay.setTextColor(context.getResources().getColor(R.color.date_state_2));
 			}
-			viewHolder.tvFragmentMonthItemDay.setBackgroundResource(R.color.white);
-			viewHolder.tvFragmentMonthItemChineseDay.setBackgroundResource(R.color.white);
+			viewHolder.tvFragmentMonthItemDay.setBackgroundResource(android.R.color.white);
+			viewHolder.tvFragmentMonthItemChineseDay.setBackgroundResource(android.R.color.white);
 		}
 		return view;
 	}

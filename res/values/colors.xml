@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="white">#FFFFFF</color>
-    <color name="black">#000000</color>
     <!-- tab -->
     <color name="tab_normal">#333333</color>
     <color name="tab_select">#015997</color>

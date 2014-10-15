@@ -18,7 +18,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/head_sun"
-            android:textColor="@color/white" />
+            android:textColor="@android:color/white" />
 
         <TextView
             android:layout_width="0dp"
@@ -26,7 +26,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/head_mon"
-            android:textColor="@color/white" />
+            android:textColor="@android:color/white" />
 
         <TextView
             android:layout_width="0dp"
@@ -34,7 +34,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/head_tue"
-            android:textColor="@color/white" />
+            android:textColor="@android:color/white" />
 
         <TextView
             android:layout_width="0dp"
@@ -42,7 +42,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/head_wed"
-            android:textColor="@color/white" />
+            android:textColor="@android:color/white" />
 
         <TextView
             android:layout_width="0dp"
@@ -50,7 +50,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/head_thu"
-            android:textColor="@color/white" />
+            android:textColor="@android:color/white" />
 
         <TextView
             android:layout_width="0dp"
@@ -58,7 +58,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/head_fri"
-            android:textColor="@color/white" />
+            android:textColor="@android:color/white" />
 
         <TextView
             android:layout_width="0dp"
@@ -66,7 +66,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/head_sat"
-            android:textColor="@color/white" />
+            android:textColor="@android:color/white" />
     </LinearLayout>
 
     <GridView
