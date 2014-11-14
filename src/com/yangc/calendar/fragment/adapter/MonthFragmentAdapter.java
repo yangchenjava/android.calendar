@@ -40,20 +40,18 @@ public class MonthFragmentAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		View view;
 		ViewHolder viewHolder;
 		if (convertView == null) {
-			view = View.inflate(context, R.layout.fragment_month_item_item, null);
-			view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, Constants.GV_HEIGHT / 6));
+			convertView = View.inflate(context, R.layout.fragment_month_item_item, null);
+			convertView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, Constants.GV_HEIGHT / 6));
 			viewHolder = new ViewHolder();
-			viewHolder.tvFragmentMonthItemDay = (TextView) view.findViewById(R.id.tv_fragmentMonthItem_day);
-			viewHolder.tvFragmentMonthItemChineseDay = (TextView) view.findViewById(R.id.tv_fragmentMonthItem_chineseDay);
+			viewHolder.tvFragmentMonthItemDay = (TextView) convertView.findViewById(R.id.tv_fragmentMonthItem_day);
+			viewHolder.tvFragmentMonthItemChineseDay = (TextView) convertView.findViewById(R.id.tv_fragmentMonthItem_chineseDay);
 			viewHolder.tvFragmentMonthItemDay.getLayoutParams().width = Constants.SCREEN_WIDTH / 7;
 			viewHolder.tvFragmentMonthItemChineseDay.getLayoutParams().width = Constants.SCREEN_WIDTH / 7;
-			view.setTag(viewHolder);
+			convertView.setTag(viewHolder);
 		} else {
-			view = convertView;
-			viewHolder = (ViewHolder) view.getTag();
+			viewHolder = (ViewHolder) convertView.getTag();
 		}
 
 		CalendarBean bean = list.get(position);
@@ -83,7 +81,7 @@ public class MonthFragmentAdapter extends BaseAdapter {
 			viewHolder.tvFragmentMonthItemDay.setBackgroundResource(android.R.color.white);
 			viewHolder.tvFragmentMonthItemChineseDay.setBackgroundResource(android.R.color.white);
 		}
-		return view;
+		return convertView;
 	}
 
 	private class ViewHolder {
