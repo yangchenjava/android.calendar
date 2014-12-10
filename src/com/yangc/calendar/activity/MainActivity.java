@@ -61,8 +61,8 @@ public class MainActivity extends FragmentActivity {
 		this.aboutDialog = new AboutDialog(this, R.style.prompt_dialog);
 
 		this.fragments = new SparseArrayCompat<Fragment>(2);
-		this.fragments.put(R.id.rb_tabDay, new DayFragment(this));
-		this.fragments.put(R.id.rb_tabMonth, new MonthFragment(this));
+		this.fragments.put(R.id.rb_tabDay, new DayFragment());
+		this.fragments.put(R.id.rb_tabMonth, new MonthFragment());
 
 		LinearLayout llTitleBar = (LinearLayout) this.findViewById(R.id.ll_titleBar);
 		llTitleBar.setOnClickListener(new View.OnClickListener() {

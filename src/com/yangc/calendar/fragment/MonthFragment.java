@@ -28,15 +28,10 @@ public class MonthFragment extends Fragment {
 	public static final int ITEM_COUNT = 12000;
 	public static AtomicBoolean ONCE = new AtomicBoolean();
 
-	private MainActivity mainActivity;
 	private ViewPager vpFragmentMonth;
 	private YMDialog ymDialog;
 
 	private String dateSelected;
-
-	public MonthFragment(MainActivity mainActivity) {
-		this.mainActivity = mainActivity;
-	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -46,7 +41,7 @@ public class MonthFragment extends Fragment {
 		this.vpFragmentMonth.setOffscreenPageLimit(2);
 		this.vpFragmentMonth.setAdapter(new MonthFragmentPagerAdapter());
 		this.vpFragmentMonth.setOnPageChangeListener(new PageChangeListener());
-		this.ymDialog = new YMDialog(this.mainActivity, R.style.prompt_dialog, new YMDialog.OnDateSetListener() {
+		this.ymDialog = new YMDialog(this.getActivity(), R.style.prompt_dialog, new YMDialog.OnDateSetListener() {
 			@Override
 			public void onDateSet(int year, int monthOfYear) {
 				MonthFragment.ONCE.set(true);
@@ -69,7 +64,7 @@ public class MonthFragment extends Fragment {
 	}
 
 	private void setToday() {
-		this.mainActivity.setTitleBarText(LocalDate.now().toString("yyyy-MM"));
+		((MainActivity) this.getActivity()).setTitleBarText(LocalDate.now().toString("yyyy-MM"));
 		this.vpFragmentMonth.setCurrentItem(ITEM_COUNT / 2);
 	}
 
@@ -95,8 +90,8 @@ public class MonthFragment extends Fragment {
 
 		@Override
 		public Object instantiateItem(ViewGroup container, int position) {
-			View view = mainActivity.getLayoutInflater().inflate(R.layout.fragment_month_item, container, false);
-			new MonthAsyncTask(mainActivity, (GridView) view.findViewById(R.id.gv_fragmentMonth_grid)).execute(position);
+			View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_month_item, container, false);
+			new MonthAsyncTask(getActivity(), (GridView) view.findViewById(R.id.gv_fragmentMonth_grid)).execute(position);
 			container.addView(view);
 			return view;
 		}
@@ -119,16 +114,16 @@ public class MonthFragment extends Fragment {
 			if (dateSelected.equals(Constants.BEGIN_MONTH)) {
 				ld = ld.plusMonths(1);
 				setViewPagerCurrentItem(ld.getYear(), ld.getMonthOfYear(), 1);
-				Toast.makeText(mainActivity, R.string.text_prompt, Toast.LENGTH_SHORT).show();
+				Toast.makeText(getActivity(), R.string.text_prompt, Toast.LENGTH_SHORT).show();
 			} else if (dateSelected.equals(Constants.END_MONTH)) {
 				ld = ld.plusMonths(-1);
 				setViewPagerCurrentItem(ld.getYear(), ld.getMonthOfYear(), 1);
-				Toast.makeText(mainActivity, R.string.text_prompt, Toast.LENGTH_SHORT).show();
+				Toast.makeText(getActivity(), R.string.text_prompt, Toast.LENGTH_SHORT).show();
 			} else {
 				new Handler().post(new Runnable() {
 					@Override
 					public void run() {
-						mainActivity.setTitleBarText(dateSelected);
+						((MainActivity) getActivity()).setTitleBarText(dateSelected);
 					}
 				});
 			}

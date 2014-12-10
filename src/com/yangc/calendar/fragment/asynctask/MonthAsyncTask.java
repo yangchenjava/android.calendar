@@ -24,12 +24,12 @@ import com.yangc.calendar.utils.Constants;
 public class MonthAsyncTask extends AsyncTask<Integer, Integer, BaseAdapter> {
 
 	private Context context;
-	private GridView mGridView;
+	private GridView gridView;
 	private ProgressDialog progressDialog;
 
-	public MonthAsyncTask(Context context, GridView mGridView) {
+	public MonthAsyncTask(Context context, GridView gridView) {
 		this.context = context;
-		this.mGridView = mGridView;
+		this.gridView = gridView;
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public class MonthAsyncTask extends AsyncTask<Integer, Integer, BaseAdapter> {
 		if (this.progressDialog != null) {
 			this.progressDialog.cancel();
 		}
-		this.mGridView.setAdapter(result);
+		this.gridView.setAdapter(result);
 	}
 
 	private List<CalendarBean> getCalendarBeanList(LocalDate ld) {

@@ -25,15 +25,10 @@ public class DayFragment extends Fragment {
 
 	public static final int ITEM_COUNT = 4380000;
 
-	private MainActivity mainActivity;
 	private ViewPager vpFragmentDay;
 	private YMDDialog ymdDialog;
 
 	private String dateSelected;
-
-	public DayFragment(MainActivity mainActivity) {
-		this.mainActivity = mainActivity;
-	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -42,7 +37,7 @@ public class DayFragment extends Fragment {
 		this.vpFragmentDay.setOffscreenPageLimit(2);
 		this.vpFragmentDay.setAdapter(new DayFragmentPagerAdapter());
 		this.vpFragmentDay.setOnPageChangeListener(new PageChangeListener());
-		this.ymdDialog = new YMDDialog(this.mainActivity, R.style.prompt_dialog, new YMDDialog.OnDateSetListener() {
+		this.ymdDialog = new YMDDialog(this.getActivity(), R.style.prompt_dialog, new YMDDialog.OnDateSetListener() {
 			@Override
 			public void onDateSet(int year, int monthOfYear, int dayOfMonth) {
 				setViewPagerCurrentItem(year, monthOfYear + 1, dayOfMonth);
@@ -63,7 +58,7 @@ public class DayFragment extends Fragment {
 	}
 
 	private void setToday() {
-		this.mainActivity.setTitleBarText(LocalDate.now().toString("yyyy-MM"));
+		((MainActivity) this.getActivity()).setTitleBarText(LocalDate.now().toString("yyyy-MM"));
 		this.vpFragmentDay.setCurrentItem(ITEM_COUNT / 2);
 	}
 
@@ -94,7 +89,7 @@ public class DayFragment extends Fragment {
 
 			int day = ld.getDayOfMonth();
 
-			View view = mainActivity.getLayoutInflater().inflate(R.layout.fragment_day_item, container, false);
+			View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_day_item, container, false);
 			((TextView) view.findViewById(R.id.tv_fragmentDay_day)).setText("" + day);
 			((TextView) view.findViewById(R.id.tv_fragmentDay_ch_year)).setText(chineseCalendar.getChinese(ChineseCalendar.CHINESE_YEAR) + " ["
 					+ chineseCalendar.getChinese(ChineseCalendar.CHINESE_ZODIAC) + "年]");
@@ -106,8 +101,8 @@ public class DayFragment extends Fragment {
 					(TextView) view.findViewById(R.id.tv_fragmentDay_good_2), (TextView) view.findViewById(R.id.tv_fragmentDay_goodContent_2), (TextView) view.findViewById(R.id.tv_fragmentDay_bad_1),
 					(TextView) view.findViewById(R.id.tv_fragmentDay_badContent_1), (TextView) view.findViewById(R.id.tv_fragmentDay_bad_2),
 					(TextView) view.findViewById(R.id.tv_fragmentDay_badContent_2), day);
-			DivineUtils.setFace(mainActivity, (TextView) view.findViewById(R.id.tv_fragmentDay_face), day);
-			DivineUtils.setDrink(mainActivity, (TextView) view.findViewById(R.id.tv_fragmentDay_drink), day);
+			DivineUtils.setFace(getActivity(), (TextView) view.findViewById(R.id.tv_fragmentDay_face), day);
+			DivineUtils.setDrink(getActivity(), (TextView) view.findViewById(R.id.tv_fragmentDay_drink), day);
 			DivineUtils.setGirl((TextView) view.findViewById(R.id.tv_fragmentDay_girl), ld.getYear(), ld.getMonthOfYear(), day);
 
 			container.addView(view);
@@ -132,16 +127,16 @@ public class DayFragment extends Fragment {
 			if (dateSelected.equals(Constants.BEGIN_DATE)) {
 				ld = ld.plusDays(1);
 				setViewPagerCurrentItem(ld.getYear(), ld.getMonthOfYear(), ld.getDayOfMonth());
-				Toast.makeText(mainActivity, R.string.text_prompt, Toast.LENGTH_SHORT).show();
+				Toast.makeText(getActivity(), R.string.text_prompt, Toast.LENGTH_SHORT).show();
 			} else if (dateSelected.equals(Constants.END_MONTH)) {
 				ld = ld.plusDays(-1);
 				setViewPagerCurrentItem(ld.getYear(), ld.getMonthOfYear(), ld.getDayOfMonth());
-				Toast.makeText(mainActivity, R.string.text_prompt, Toast.LENGTH_SHORT).show();
+				Toast.makeText(getActivity(), R.string.text_prompt, Toast.LENGTH_SHORT).show();
 			} else {
 				new Handler().post(new Runnable() {
 					@Override
 					public void run() {
-						mainActivity.setTitleBarText(dateSelected.substring(0, 7));
+						((MainActivity) getActivity()).setTitleBarText(dateSelected.substring(0, 7));
 					}
 				});
 			}
