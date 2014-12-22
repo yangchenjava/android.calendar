@@ -8,7 +8,7 @@ import org.joda.time.Days;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 
-import android.app.ProgressDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.BaseAdapter;
@@ -18,6 +18,7 @@ import com.yangc.calendar.R;
 import com.yangc.calendar.bean.CalendarBean;
 import com.yangc.calendar.fragment.MonthFragment;
 import com.yangc.calendar.fragment.adapter.MonthFragmentAdapter;
+import com.yangc.calendar.utils.AndroidUtils;
 import com.yangc.calendar.utils.ChineseCalendar;
 import com.yangc.calendar.utils.Constants;
 
@@ -25,7 +26,7 @@ public class MonthAsyncTask extends AsyncTask<Integer, Integer, BaseAdapter> {
 
 	private Context context;
 	private GridView gridView;
-	private ProgressDialog progressDialog;
+	private Dialog progressDialog;
 
 	public MonthAsyncTask(Context context, GridView gridView) {
 		this.context = context;
@@ -35,7 +36,7 @@ public class MonthAsyncTask extends AsyncTask<Integer, Integer, BaseAdapter> {
 	@Override
 	protected void onPreExecute() {
 		if (MonthFragment.ONCE.compareAndSet(true, false)) {
-			this.progressDialog = ProgressDialog.show(this.context, "", this.context.getResources().getString(R.string.text_load), true);
+			this.progressDialog = AndroidUtils.showProgressDialog(this.context, this.context.getResources().getString(R.string.text_load), true, true);
 		}
 	}
 
@@ -47,7 +48,7 @@ public class MonthAsyncTask extends AsyncTask<Integer, Integer, BaseAdapter> {
 	@Override
 	protected void onPostExecute(BaseAdapter result) {
 		if (this.progressDialog != null) {
-			this.progressDialog.cancel();
+			this.progressDialog.dismiss();
 		}
 		this.gridView.setAdapter(result);
 	}

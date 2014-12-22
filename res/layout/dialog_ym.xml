@@ -23,7 +23,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:background="@drawable/title_bar"
-        android:contentDescription="@string/dividing_line" />
+        android:contentDescription="@string/content_description" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,7 +31,8 @@
         android:orientation="horizontal"
         android:padding="10dp" >
 
-        <kankan.wheel.widget.WheelView            android:id="@+id/wv_dialogYm_year"
+        <kankan.wheel.widget.WheelView
+            android:id="@+id/wv_dialogYm_year"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
@@ -47,7 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@drawable/dividing_line_horizontal"
-        android:contentDescription="@string/dividing_line" />
+        android:contentDescription="@string/content_description" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -70,7 +71,7 @@
             android:layout_width="1dp"
             android:layout_height="match_parent"
             android:background="@drawable/dividing_line_vertical"
-            android:contentDescription="@string/dividing_line" />
+            android:contentDescription="@string/content_description" />
 
         <TextView
             android:id="@+id/tv_dialogYm_today"

@@ -33,7 +33,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="5dp"
                 android:layout_marginStart="5dp"
-                android:contentDescription="@string/title_bar_angle"
+                android:contentDescription="@string/content_description"
                 android:paddingTop="5dp"
                 android:scaleType="center"
                 android:src="@drawable/title_bar_angle" />

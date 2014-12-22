@@ -63,7 +63,7 @@
         android:layout_marginBottom="5dp"
         android:layout_marginTop="5dp"
         android:background="@drawable/dividing_line_horizontal"
-        android:contentDescription="@string/dividing_line" />
+        android:contentDescription="@string/content_description" />
 
     <LinearLayout
         android:layout_width="match_parent"

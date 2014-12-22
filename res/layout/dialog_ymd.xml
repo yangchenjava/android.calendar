@@ -23,7 +23,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:background="@drawable/title_bar"
-        android:contentDescription="@string/dividing_line" />
+        android:contentDescription="@string/content_description" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -54,7 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@drawable/dividing_line_horizontal"
-        android:contentDescription="@string/dividing_line" />
+        android:contentDescription="@string/content_description" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -77,7 +77,7 @@
             android:layout_width="1dp"
             android:layout_height="match_parent"
             android:background="@drawable/dividing_line_vertical"
-            android:contentDescription="@string/dividing_line" />
+            android:contentDescription="@string/content_description" />
 
         <TextView
             android:id="@+id/tv_dialogYmd_today"

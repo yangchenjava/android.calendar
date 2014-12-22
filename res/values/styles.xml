@@ -14,7 +14,7 @@
         <item name="android:singleLine">true</item>
     </style>
 
-    <style name="prompt_dialog" parent="@android:Theme.Dialog">
+    <style name="prompt_dialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowFrame">@null</item>

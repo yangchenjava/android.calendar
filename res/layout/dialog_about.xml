@@ -23,7 +23,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:background="@drawable/title_bar"
-        android:contentDescription="@string/dividing_line" />
+        android:contentDescription="@string/content_description" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
             android:layout_marginRight="10dp"
-            android:contentDescription="@string/app_icon"
+            android:contentDescription="@string/content_description"
             android:scaleType="center"
             android:src="@drawable/app_icon" />
 
@@ -76,7 +76,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@drawable/dividing_line_horizontal"
-        android:contentDescription="@string/dividing_line" />
+        android:contentDescription="@string/content_description" />
 
     <RelativeLayout
         android:id="@+id/rl_dialogAbout_cancel"
@@ -90,7 +90,7 @@
             android:layout_height="1dp"
             android:layout_alignParentBottom="true"
             android:background="@drawable/title_bar"
-            android:contentDescription="@string/dividing_line" />
+            android:contentDescription="@string/content_description" />
 
         <TextView
             android:layout_width="wrap_content"
