@@ -45,7 +45,7 @@ public class MonthFragment extends Fragment {
 			@Override
 			public void onDateSet(int year, int monthOfYear) {
 				MonthFragment.ONCE.set(true);
-				setViewPagerCurrentItem(year, monthOfYear + 1, 1);
+				setViewPagerCurrentItem(year, monthOfYear + 1);
 			}
 		}, new YMDialog.OnClickListener() {
 			@Override
@@ -68,8 +68,8 @@ public class MonthFragment extends Fragment {
 		this.vpFragmentMonth.setCurrentItem(ITEM_COUNT / 2);
 	}
 
-	private void setViewPagerCurrentItem(int year, int month, int day) {
-		this.vpFragmentMonth.setCurrentItem(ITEM_COUNT / 2 + Months.monthsBetween(LocalDate.now().withDayOfMonth(1), new LocalDate(year, month, day)).getMonths());
+	private void setViewPagerCurrentItem(int year, int month) {
+		this.vpFragmentMonth.setCurrentItem(ITEM_COUNT / 2 + Months.monthsBetween(LocalDate.now().withDayOfMonth(1), new LocalDate(year, month, 1)).getMonths());
 	}
 
 	private class MonthFragmentPagerAdapter extends PagerAdapter {
@@ -91,7 +91,7 @@ public class MonthFragment extends Fragment {
 		@Override
 		public Object instantiateItem(ViewGroup container, int position) {
 			View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_month_item, container, false);
-			new MonthAsyncTask(getActivity(), (GridView) view.findViewById(R.id.gv_fragmentMonth_grid)).execute(position);
+			new MonthAsyncTask(getActivity(), (GridView) view.findViewById(R.id.gv_fragmentMonth_grid)).execute(position - ITEM_COUNT / 2);
 			container.addView(view);
 			return view;
 		}
@@ -113,11 +113,11 @@ public class MonthFragment extends Fragment {
 			dateSelected = ld.toString("yyyy-MM");
 			if (dateSelected.equals(Constants.BEGIN_MONTH)) {
 				ld = ld.plusMonths(1);
-				setViewPagerCurrentItem(ld.getYear(), ld.getMonthOfYear(), 1);
+				setViewPagerCurrentItem(ld.getYear(), ld.getMonthOfYear());
 				Toast.makeText(getActivity(), R.string.text_prompt, Toast.LENGTH_SHORT).show();
 			} else if (dateSelected.equals(Constants.END_MONTH)) {
 				ld = ld.plusMonths(-1);
-				setViewPagerCurrentItem(ld.getYear(), ld.getMonthOfYear(), 1);
+				setViewPagerCurrentItem(ld.getYear(), ld.getMonthOfYear());
 				Toast.makeText(getActivity(), R.string.text_prompt, Toast.LENGTH_SHORT).show();
 			} else {
 				new Handler().post(new Runnable() {

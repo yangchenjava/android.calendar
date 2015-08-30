@@ -42,7 +42,7 @@ public class MonthAsyncTask extends AsyncTask<Integer, Integer, BaseAdapter> {
 
 	@Override
 	protected BaseAdapter doInBackground(Integer... params) {
-		return new MonthFragmentAdapter(this.context, this.getCalendarBeanList(LocalDate.now().plusMonths(params[0] - MonthFragment.ITEM_COUNT / 2)));
+		return new MonthFragmentAdapter(this.context, this.getCalendarBeanList(LocalDate.now().plusMonths(params[0])));
 	}
 
 	@Override
@@ -68,7 +68,7 @@ public class MonthAsyncTask extends AsyncTask<Integer, Integer, BaseAdapter> {
 		// 先调一下这个, 后面的getTime()才能生效
 		cc.getSimpleGregorianDateString();
 		// 除夕的公历日期
-		CharSequence newYearEve = DateTimeFormat.forPattern("yyyyMMdd").print(cc.getTimeInMillis());
+		String newYearEve = DateTimeFormat.forPattern("yyyyMMdd").print(cc.getTimeInMillis());
 
 		for (int i = 0; i < 42; i++) {
 			CalendarBean bean = new CalendarBean();

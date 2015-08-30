@@ -129,6 +129,7 @@ public class MainActivity extends FragmentActivity {
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
 			if (Constants.IS_EXIT) {
+				exitHandler.removeMessages(0);
 				this.finish();
 				System.exit(0);
 			} else {
