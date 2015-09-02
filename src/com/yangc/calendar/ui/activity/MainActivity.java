@@ -1,4 +1,4 @@
-package com.yangc.calendar.activity;
+package com.yangc.calendar.ui.activity;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,9 +20,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.yangc.calendar.R;
-import com.yangc.calendar.dialog.AboutDialog;
-import com.yangc.calendar.fragment.DayFragment;
-import com.yangc.calendar.fragment.MonthFragment;
+import com.yangc.calendar.ui.dialog.AboutDialog;
+import com.yangc.calendar.ui.fragment.DayFragment;
+import com.yangc.calendar.ui.fragment.MonthFragment;
 import com.yangc.calendar.utils.Constants;
 
 public class MainActivity extends FragmentActivity {

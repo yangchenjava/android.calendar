@@ -1,4 +1,4 @@
-package com.yangc.calendar.fragment;
+package com.yangc.calendar.ui.fragment;
 
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
@@ -15,8 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.yangc.calendar.R;
-import com.yangc.calendar.activity.MainActivity;
-import com.yangc.calendar.dialog.YMDDialog;
+import com.yangc.calendar.ui.activity.MainActivity;
+import com.yangc.calendar.ui.dialog.YMDDialog;
 import com.yangc.calendar.utils.ChineseCalendar;
 import com.yangc.calendar.utils.Constants;
 import com.yangc.calendar.utils.DivineUtils;

@@ -1,4 +1,4 @@
-package com.yangc.calendar.fragment.asynctask;
+package com.yangc.calendar.ui.fragment.asynctask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +16,8 @@ import android.widget.GridView;
 
 import com.yangc.calendar.R;
 import com.yangc.calendar.bean.CalendarBean;
-import com.yangc.calendar.fragment.MonthFragment;
-import com.yangc.calendar.fragment.adapter.MonthFragmentAdapter;
+import com.yangc.calendar.ui.fragment.MonthFragment;
+import com.yangc.calendar.ui.fragment.adapter.MonthFragmentAdapter;
 import com.yangc.calendar.utils.AndroidUtils;
 import com.yangc.calendar.utils.ChineseCalendar;
 import com.yangc.calendar.utils.Constants;

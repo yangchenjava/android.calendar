@@ -1,4 +1,4 @@
-package com.yangc.calendar.fragment;
+package com.yangc.calendar.ui.fragment;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -17,9 +17,9 @@ import android.widget.GridView;
 import android.widget.Toast;
 
 import com.yangc.calendar.R;
-import com.yangc.calendar.activity.MainActivity;
-import com.yangc.calendar.dialog.YMDialog;
-import com.yangc.calendar.fragment.asynctask.MonthAsyncTask;
+import com.yangc.calendar.ui.activity.MainActivity;
+import com.yangc.calendar.ui.dialog.YMDialog;
+import com.yangc.calendar.ui.fragment.asynctask.MonthAsyncTask;
 import com.yangc.calendar.utils.Constants;
 
 public class MonthFragment extends Fragment {

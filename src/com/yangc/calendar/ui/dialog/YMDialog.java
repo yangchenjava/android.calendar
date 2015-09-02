@@ -1,6 +1,4 @@
-package com.yangc.calendar.dialog;
-
-import java.util.Calendar;
+package com.yangc.calendar.ui.dialog;
 
 import kankan.wheel.widget.OnWheelChangedListener;
 import kankan.wheel.widget.WheelView;
@@ -16,7 +14,7 @@ import android.widget.TextView;
 import com.yangc.calendar.R;
 import com.yangc.calendar.utils.Constants;
 
-public class YMDDialog extends Dialog {
+public class YMDialog extends Dialog {
 
 	private Context context;
 	private OnDateSetListener dateSetListener;
@@ -26,19 +24,18 @@ public class YMDDialog extends Dialog {
 
 	private WheelView yearWheel;
 	private WheelView monthWheel;
-	private WheelView dayWheel;
 
-	public YMDDialog(Context context) {
+	public YMDialog(Context context) {
 		super(context);
 		this.context = context;
 	}
 
-	public YMDDialog(Context context, int theme) {
+	public YMDialog(Context context, int theme) {
 		super(context, theme);
 		this.context = context;
 	}
 
-	public YMDDialog(Context context, int theme, OnDateSetListener dateSetListener, OnClickListener clickListener) {
+	public YMDialog(Context context, int theme, OnDateSetListener dateSetListener, OnClickListener clickListener) {
 		super(context, theme);
 		this.context = context;
 		this.dateSetListener = dateSetListener;
@@ -48,45 +45,35 @@ public class YMDDialog extends Dialog {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		this.setContentView(R.layout.dialog_ymd);
+		setContentView(R.layout.dialog_ym);
 
 		WindowManager.LayoutParams params = this.getWindow().getAttributes();
 		params.width = (int) (Constants.SCREEN_WIDTH * 0.9);
 		params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
 		this.getWindow().setAttributes(params);
 
-		title = (TextView) this.findViewById(R.id.tv_dialogYmd_title);
+		title = (TextView) this.findViewById(R.id.tv_dialogYm_title);
 
-		yearWheel = (WheelView) this.findViewById(R.id.wv_dialogYmd_year);
+		yearWheel = (WheelView) this.findViewById(R.id.wv_dialogYm_year);
 		yearWheel.setViewAdapter(new NumericWheelAdapter(this.context, Constants.MIN_YEAR, Constants.MAX_YEAR));
 		yearWheel.setCyclic(true);
 		yearWheel.addChangingListener(new WheelChangedListener());
 
-		monthWheel = (WheelView) this.findViewById(R.id.wv_dialogYmd_month);
+		monthWheel = (WheelView) this.findViewById(R.id.wv_dialogYm_month);
 		monthWheel.setViewAdapter(new NumericWheelAdapter(this.context, 1, 12, "%02d"));
 		monthWheel.setCyclic(true);
 		monthWheel.addChangingListener(new WheelChangedListener());
 
-		dayWheel = (WheelView) this.findViewById(R.id.wv_dialogYmd_day);
-		dayWheel.setCyclic(true);
-		dayWheel.addChangingListener(new OnWheelChangedListener() {
-			@Override
-			public void onChanged(WheelView wheel, int oldValue, int newValue) {
-				title.setText((yearWheel.getCurrentItem() + Constants.MIN_YEAR) + "年" + String.format("%02d", monthWheel.getCurrentItem() + 1) + "月"
-						+ String.format("%02d", dayWheel.getCurrentItem() + 1) + "日");
-			}
-		});
-
-		TextView setBtn = (TextView) this.findViewById(R.id.tv_dialogYmd_set);
+		TextView setBtn = (TextView) this.findViewById(R.id.tv_dialogYm_set);
 		setBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				dateSetListener.onDateSet(yearWheel.getCurrentItem() + Constants.MIN_YEAR, monthWheel.getCurrentItem(), dayWheel.getCurrentItem() + 1);
+				dateSetListener.onDateSet(yearWheel.getCurrentItem() + Constants.MIN_YEAR, monthWheel.getCurrentItem());
 				dismiss();
 			}
 		});
 
-		TextView todayBtn = (TextView) this.findViewById(R.id.tv_dialogYmd_today);
+		TextView todayBtn = (TextView) this.findViewById(R.id.tv_dialogYm_today);
 		todayBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -99,28 +86,19 @@ public class YMDDialog extends Dialog {
 	private class WheelChangedListener implements OnWheelChangedListener {
 		@Override
 		public void onChanged(WheelView wheel, int oldValue, int newValue) {
-			Calendar calendar = Calendar.getInstance();
-			calendar.set(yearWheel.getCurrentItem() + Constants.MIN_YEAR, monthWheel.getCurrentItem(), 1);
-			int maxDay = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
-			dayWheel.setViewAdapter(new NumericWheelAdapter(context, 1, maxDay, "%02d"));
-			if (dayWheel.getCurrentItem() + 1 > maxDay) {
-				dayWheel.setCurrentItem(maxDay - 1);
-			}
-			title.setText((yearWheel.getCurrentItem() + Constants.MIN_YEAR) + "年" + String.format("%02d", monthWheel.getCurrentItem() + 1) + "月" + String.format("%02d", dayWheel.getCurrentItem() + 1)
-					+ "日");
+			title.setText((yearWheel.getCurrentItem() + Constants.MIN_YEAR) + "年" + String.format("%02d", monthWheel.getCurrentItem() + 1) + "月");
 		}
 	}
 
-	public void showDialog(int year, int monthOfYear, int dayOfMonth) {
+	public void showDialog(int year, int monthOfYear) {
 		this.show();
-		title.setText(year + "年" + String.format("%02d", monthOfYear + 1) + "月" + String.format("%02d", dayOfMonth) + "日");
+		title.setText(year + "年" + String.format("%02d", monthOfYear + 1) + "月");
 		yearWheel.setCurrentItem(year - Constants.MIN_YEAR);
 		monthWheel.setCurrentItem(monthOfYear);
-		dayWheel.setCurrentItem(dayOfMonth - 1);
 	}
 
 	public interface OnDateSetListener {
-		void onDateSet(int year, int monthOfYear, int dayOfMonth);
+		void onDateSet(int year, int monthOfYear);
 	}
 
 	public interface OnClickListener {

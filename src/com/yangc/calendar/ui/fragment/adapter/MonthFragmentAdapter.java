@@ -1,4 +1,4 @@
-package com.yangc.calendar.fragment.adapter;
+package com.yangc.calendar.ui.fragment.adapter;
 
 import java.util.List;
 
@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.yangc.calendar.R;
 import com.yangc.calendar.bean.CalendarBean;
+import com.yangc.calendar.utils.AndroidUtils;
 import com.yangc.calendar.utils.Constants;
 
 public class MonthFragmentAdapter extends BaseAdapter {
@@ -43,7 +44,7 @@ public class MonthFragmentAdapter extends BaseAdapter {
 		ViewHolder viewHolder;
 		if (convertView == null) {
 			convertView = View.inflate(context, R.layout.fragment_month_item_item, null);
-			convertView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, Constants.GV_HEIGHT / 6));
+			convertView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (Constants.GV_HEIGHT - AndroidUtils.dp2px(context, 4)) / 6));
 			viewHolder = new ViewHolder();
 			viewHolder.tvFragmentMonthItemDay = (TextView) convertView.findViewById(R.id.tv_fragmentMonthItem_day);
 			viewHolder.tvFragmentMonthItemChineseDay = (TextView) convertView.findViewById(R.id.tv_fragmentMonthItem_chineseDay);

@@ -1,4 +1,4 @@
-package com.yangc.calendar.dialog;
+package com.yangc.calendar.ui.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
