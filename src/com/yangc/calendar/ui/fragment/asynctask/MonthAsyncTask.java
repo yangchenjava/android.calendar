@@ -42,6 +42,12 @@ public class MonthAsyncTask extends AsyncTask<Integer, Integer, BaseAdapter> {
 
 	@Override
 	protected BaseAdapter doInBackground(Integer... params) {
+		// 延迟进度旋转,美化交互
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		return new MonthFragmentAdapter(this.context, this.getCalendarBeanList(LocalDate.now().plusMonths(params[0])));
 	}
 

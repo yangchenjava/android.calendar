@@ -31,6 +31,8 @@ public class MonthFragment extends Fragment {
 	private ViewPager vpFragmentMonth;
 	private YMDialog ymDialog;
 
+	private PageChangeListener pageChangeListener;
+
 	private String dateSelected;
 
 	@Override
@@ -40,7 +42,8 @@ public class MonthFragment extends Fragment {
 		this.vpFragmentMonth = (ViewPager) view.findViewById(R.id.vp_fragmentMonth);
 		this.vpFragmentMonth.setOffscreenPageLimit(2);
 		this.vpFragmentMonth.setAdapter(new MonthFragmentPagerAdapter());
-		this.vpFragmentMonth.setOnPageChangeListener(new PageChangeListener());
+		this.pageChangeListener = new PageChangeListener();
+		this.vpFragmentMonth.addOnPageChangeListener(this.pageChangeListener);
 		this.ymDialog = new YMDialog(this.getActivity(), R.style.prompt_dialog, new YMDialog.OnDateSetListener() {
 			@Override
 			public void onDateSet(int year, int monthOfYear) {
@@ -61,6 +64,12 @@ public class MonthFragment extends Fragment {
 	public void onResume() {
 		super.onResume();
 		this.setToday();
+	}
+
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		this.vpFragmentMonth.removeOnPageChangeListener(this.pageChangeListener);
 	}
 
 	private void setToday() {

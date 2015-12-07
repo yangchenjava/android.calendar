@@ -28,6 +28,8 @@ public class DayFragment extends Fragment {
 	private ViewPager vpFragmentDay;
 	private YMDDialog ymdDialog;
 
+	private PageChangeListener pageChangeListener;
+
 	private String dateSelected;
 
 	@Override
@@ -36,7 +38,8 @@ public class DayFragment extends Fragment {
 		this.vpFragmentDay = (ViewPager) view.findViewById(R.id.vp_fragmentDay);
 		this.vpFragmentDay.setOffscreenPageLimit(2);
 		this.vpFragmentDay.setAdapter(new DayFragmentPagerAdapter());
-		this.vpFragmentDay.setOnPageChangeListener(new PageChangeListener());
+		this.pageChangeListener = new PageChangeListener();
+		this.vpFragmentDay.addOnPageChangeListener(this.pageChangeListener);
 		this.ymdDialog = new YMDDialog(this.getActivity(), R.style.prompt_dialog, new YMDDialog.OnDateSetListener() {
 			@Override
 			public void onDateSet(int year, int monthOfYear, int dayOfMonth) {
@@ -55,6 +58,12 @@ public class DayFragment extends Fragment {
 	public void onResume() {
 		super.onResume();
 		this.setToday();
+	}
+
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		this.vpFragmentDay.removeOnPageChangeListener(this.pageChangeListener);
 	}
 
 	private void setToday() {
