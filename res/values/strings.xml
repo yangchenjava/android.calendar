@@ -27,6 +27,7 @@
     <string name="button_cancel">取消</string>
 
     <!-- text -->
+    <string name="text_new_year_eve">除夕</string>
     <string name="text_good">宜</string>
     <string name="text_bad">不宜</string>
     <string name="text_about">关于</string>

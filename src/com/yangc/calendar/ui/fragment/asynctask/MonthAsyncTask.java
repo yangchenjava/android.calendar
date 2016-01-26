@@ -84,7 +84,7 @@ public class MonthAsyncTask extends AsyncTask<Integer, Integer, BaseAdapter> {
 			String ymdStr = ld.toString("yyyyMMdd");
 			String mdStr = ymdStr.substring(4);
 			if (ymdStr.equals(newYearEve)) {
-				bean.setChineseDay("除夕");
+				bean.setChineseDay(this.context.getString(R.string.text_new_year_eve));
 				bean.setFestival(true);
 			} else if (Constants.FESTIVAL.containsKey(mdStr)) {
 				bean.setChineseDay(Constants.FESTIVAL.get(mdStr));
@@ -94,12 +94,11 @@ public class MonthAsyncTask extends AsyncTask<Integer, Integer, BaseAdapter> {
 				if (Constants.FESTIVAL.containsKey(key)) {
 					bean.setChineseDay(Constants.FESTIVAL.get(key));
 					bean.setFestival(true);
+				} else {
+					String chineseDateName = chineseCalendar.getChinese(ChineseCalendar.CHINESE_TERM_OR_DATE);
+					bean.setChineseDay(chineseDateName);
+					bean.setFestival(ChineseCalendar.isTerm(chineseDateName));
 				}
-			}
-			if (bean.getChineseDay() == null) {
-				String chineseDateName = chineseCalendar.getChinese(ChineseCalendar.CHINESE_TERM_OR_DATE);
-				bean.setChineseDay(chineseDateName);
-				bean.setFestival(ChineseCalendar.isTerm(chineseDateName));
 			}
 
 			// 判断是否为周末
